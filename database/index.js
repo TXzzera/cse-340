@@ -1,7 +1,6 @@
 const { Pool } = require("pg")
 require("dotenv").config()
 
-const isLocal = process.env.NODE_ENV === "development"
 /* ***************
  * Connection Pool
  * SSL Object needed for local testing of app
@@ -12,9 +11,7 @@ let pool
 if (process.env.NODE_ENV == "development") {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: isLocal
-    ?{require: true, rejectUnauthorized: false} /*local*/
-    :{rejectUnauthorized: false} /*production render*/
+     ssl: { rejectUnauthorized: false }
 })
 
 // Added for troubleshooting queries
@@ -35,5 +32,6 @@ module.exports = {
   pool = new Pool({
     connectionString: process.env.DATABASE_URL,
   })
-  module.exports = pool
 }
+
+module.exports = pool
