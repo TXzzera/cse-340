@@ -27,12 +27,12 @@ invCont.vehicleDetails = async function (req, res) {
         return res.status(404).send("Vehicle not found");
     }
 
-  /*const nav = await utilities.getNav();
-  res.render("inventory/vehicle", { title: `${vehicle.inv_make} ${vehicle.inv_model}`, nav, vehicle });*/
+  const nav = await utilities.getNav();
+  res.render("inventory/vehicle", { title: `${vehicle.inv_make} ${vehicle.inv_model}`, nav, vehicle });
 
-
+  /*or
   const htmlContent = utilities.wrapVehicleHTML(vehicle);
-  res.send(htmlContent);
+  res.send(htmlContent);*/
   }
 
 module.exports = invCont

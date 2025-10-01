@@ -60,7 +60,7 @@ Util.wrapVehicleHTML = function(vehicle) {
   <html>
     <head>
       <title>${vehicle.inv_make} ${vehicle.inv_model}</title>
-      <link rel="stylesheet" href="/css/style.css" />
+      <link rel="stylesheet" href="/css/styles.css" />
     </head>
     <body>
       <div class="vehicle-details">
