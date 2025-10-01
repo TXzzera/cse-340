@@ -13,10 +13,6 @@ const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
 
-// Index Route
-app.get("/", baseController.buildHome)
-app.use("/inv", inventoryRoute)
-
 /* ***********************
  * View Engine and Templates
  *************************/
@@ -25,6 +21,10 @@ app.use(expressLayouts)
 app.set("layout", "./layouts/layout")
 
 app.use(static)
+
+// Index Route
+app.get("/", baseController.buildHome)
+app.use("/inv", inventoryRoute)
 
 /* ***********************
  * Local Server Information
