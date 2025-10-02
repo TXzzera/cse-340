@@ -12,6 +12,8 @@ const app = express()
 const static = require("./routes/static")
 const baseController = require("./controllers/baseController")
 const inventoryRoute = require("./routes/inventoryRoute")
+const errorRoute = require("./routes/errorRoute");
+const errorHandler = require("./middlewares/errorHandler");
 
 /* ***********************
  * View Engine and Templates
@@ -25,6 +27,11 @@ app.use(static)
 // Index Route
 app.get("/", baseController.buildHome)
 app.use("/inv", inventoryRoute)
+app.use("/error", errorRoute)
+
+/* Middleware of Global Error Handler */
+app.use(errorHandler); 
+
 
 /* ***********************
  * Local Server Information

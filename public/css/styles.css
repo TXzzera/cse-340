@@ -6,6 +6,7 @@
 *:after {
   box-sizing: border-box;
 }
+
 #top-header{
   display: flex;
   justify-content: space-between;
@@ -32,7 +33,6 @@ nav{
   background-color: black;
   padding: 15px;
 }
-
 nav ul{
   list-style: none;
   margin: 0;
@@ -40,12 +40,10 @@ nav ul{
   display: flex;
   justify-content: center;
 }
-
 nav ul li{
   margin: 0 1rem;
   color: white;
 }
-
 nav ul li a{
   text-decoration: none;
   color: white;
@@ -57,18 +55,15 @@ nav ul li a{
   padding: 1rem;
   position: relative;
 }
-
 .hero h1{
   color: black;
   font-size: 1.5rem;
 }
-
 #hero-image img{
   max-width: 100%;
   height: auto;
   display: block;
 }
-
 #hero-advertisement{
   position: absolute;
   top: 50%;
@@ -80,7 +75,6 @@ nav ul li a{
   font-weight: bold;
   z-index: 10;
 }
-
 #hero-advertisement h2{
   font-size: 1.2rem;
   margin: 0;
@@ -100,7 +94,6 @@ nav ul li a{
   font-weight: bold;
   margin-top: 10px;
 }
-
 .own-button:hover{
   transform:scale(1.1);
   background-color: rgba(28, 167, 58, 1);
@@ -110,13 +103,11 @@ nav ul li a{
   display: flex;
   flex-direction: column;
 }
-
 .delorean-details h3{
   font-size: 1.5rem;
   color: black;
   font-weight: bold;
 }
-
 #delorean-reviews{
   order: 1;
 }
@@ -124,7 +115,6 @@ nav ul li a{
   padding: 0.8rem;
   font-size: 1rem;
 }
-
 #delorean-upgrades{
   display: grid;
   grid-template-columns: repeat(2,1fr);
@@ -133,19 +123,16 @@ nav ul li a{
   order: 2;
   gap: 0px;
 }
-
 #delorean-upgrades h3{
   grid-column: 1/-1;
   margin-bottom: 10px;
 }
-
 #delorean-upgrades figure {
   display: flex;
   flex-direction: column;
   align-items: center;
   margin: 5px;
 }
-
 .image-wrapper {
   background-color: rgba(28, 167, 58, 0.7);
   border: 1px solid black;
@@ -155,12 +142,10 @@ nav ul li a{
   justify-content: center;
   align-items: center;
 }
-
 .image-wrapper img {
   max-width: 60px;
   height: auto;
 }
-
 #delorean-upgrades figcaption {
   text-align: center;
   font-weight: bold;
@@ -170,43 +155,101 @@ nav ul li a{
 
 .vehicle-details {
   display: flex;
-  flex-direction: column; /* mobile: empilhado */
+  flex-direction: column; 
   gap: 1.5rem;
   padding: 1rem;
 }
-
 .vehicle-details img {
   max-width: 100%;
   height: auto;
   border-radius: 8px;
 }
-
 .vehicle-info {
   display: flex;
   flex-direction: column;
   gap: 0.8rem;
 }
-
 .vehicle-info h1 {
   font-size: 1.6rem;
   font-weight: bold;
   color: #000;
 }
-
 .vehicle-info .price {
   font-size: 1.4rem;
   font-weight: bold;
   color: rgba(28, 167, 58, 0.9); 
 }
-
 .vehicle-info p {
   font-size: 1rem;
   line-height: 1.5;
   color: #333;
 }
 
-
-
+/* ******** Grid de Cards ******** */
+#inv-display {
+    display: grid;
+    grid-template-columns: 1fr; /* mobile: 1 card por linha */
+    gap: 20px;
+    list-style: none;
+    padding: 0;
+    margin: 2rem 0;
+    justify-items: center; /* centraliza cards no mobile */
+}
+#inv-display li {
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    overflow: hidden;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-align: center;
+    background: #fff;
+    padding: 1rem;
+    width: 100%; /* ocupa toda a coluna */
+    max-width: 340px; /* tamanho máximo do card */
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    position: relative; 
+}
+#inv-display li::after {
+    content: "";
+    position: absolute;
+    top: 65%; 
+    left: 0;
+    width: 100%;
+    height: 2px; 
+    background-color: #000; 
+}
+#inv-display li:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 0 6px 15px rgba(0,0,0,0.15);
+}
+#inv-display img {
+    width: 280px;
+    height: auto;
+    display: block;
+    margin-bottom: 0;
+}
+.namePrice {
+    width: 100%;
+    text-align: center;
+    padding: 1rem 0 0 0;
+    margin-top: auto; 
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+#inv-display a {
+    display: block;
+    padding: 0.5rem;
+    font-weight: bold;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #000;
+}
+#inv-display a:hover {
+    color: rgba(28, 167, 58, 0.9);
+}
 
 footer{
   color: black;
@@ -218,74 +261,89 @@ footer{
 /************************
  * Desktop Styles (Large Screens)
  *************************/
+@media screen and (min-width: 768px) {
+    /* Tablets: 2 cards por linha */
+    #inv-display {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
 @media screen and (min-width: 1048px) {
-
   html {
-  height: 100%;
-  background-image: url('/images/site/checkerboard.jpg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-position: center;
-}
+    height: 100%;
+    background-image: url('/images/site/checkerboard.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+  }
 
-body {
-  background-color: white; 
-  width: 80%; 
-  margin: 40px auto;
-  padding: 20px; 
-  border: 5px solid rgba(28, 167, 58, 0.7); 
-  box-sizing: border-box; 
-}
+  body {
+    background-color: white; 
+    max-width: 1200px; /* largura máxima do site */
+    margin: 40px auto; /* centraliza site */
+    padding: 20px; 
+    border: 5px solid rgba(28, 167, 58, 0.7); 
+    box-sizing: border-box; 
+  }
 
-#hero-advertisement {
-    top: 50%;
-    left: 10%;
-    max-width: 150px; 
-    width: 90%;
+  nav ul {
+    gap: 4rem;
+  }
 
-}
+  #hero-advertisement {
+      top: 50%;
+      left: 10%;
+      max-width: 150px; 
+      width: 90%;
+  }
 
   .delorean-details {
-    flex-direction: row;
-    justify-content: space-between;
-    gap: 20px; 
+      flex-direction: row;
+      justify-content: space-between;
+      gap: 20px; 
   }
 
   #delorean-upgrades {
-    order: 1; 
-    width: 60%; 
-    margin-top: 0;
+      order: 1; 
+      width: 60%; 
+      margin-top: 0;
   }
 
   #delorean-reviews {
-    order: 2;
-    width: 35%; 
+      order: 2;
+      width: 35%; 
   }
 
   #delorean-upgrades h3,
   #delorean-reviews h3 {
-    margin-left: 0;
+      margin-left: 0;
   }
-}
 
-.vehicle-details {
-    flex-direction: row; 
-    align-items: flex-start;
+  .vehicle-details {
+      flex-direction: row; 
+      align-items: flex-start;
   }
 
   .vehicle-details img {
-    width: 50%; 
+      width: 50%; 
   }
 
   .vehicle-info {
-    width: 50%; 
-    padding: 1rem;
+      width: 50%; 
+      padding: 1rem;
   }
 
   .vehicle-info h1 {
-    font-size: 2rem;
+      font-size: 2rem;
   }
 
   .vehicle-info .price {
-    font-size: 1.6rem;
+      font-size: 1.6rem;
   }
+
+  /* Desktop: 3 cards por linha */
+  #inv-display {
+      grid-template-columns: repeat(3, 1fr);
+      justify-content: center;
+  }
+}
