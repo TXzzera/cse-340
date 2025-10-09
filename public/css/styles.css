@@ -185,15 +185,15 @@ nav ul li a{
   color: #333;
 }
 
-/* ******** Grid de Cards ******** */
+/* ********Cards Grid******** */
 #inv-display {
     display: grid;
-    grid-template-columns: 1fr; /* mobile: 1 card por linha */
+    grid-template-columns: 1fr; 
     gap: 20px;
     list-style: none;
     padding: 0;
     margin: 2rem 0;
-    justify-items: center; /* centraliza cards no mobile */
+    justify-items: center; 
 }
 #inv-display li {
     border: 1px solid #ddd;
@@ -203,8 +203,8 @@ nav ul li a{
     text-align: center;
     background: #fff;
     padding: 1rem;
-    width: 100%; /* ocupa toda a coluna */
-    max-width: 340px; /* tamanho máximo do card */
+    width: 100%; 
+    max-width: 340px; 
     display: flex;
     flex-direction: column;
     justify-content: flex-start;
@@ -251,6 +251,159 @@ nav ul li a{
     color: rgba(28, 167, 58, 0.9);
 }
 
+#loginForm {
+  background-color: white;
+  border: 2px solid rgba(28, 167, 58, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 400px;
+  margin: 3rem auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+#loginForm h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: rgba(28, 167, 58, 0.9);
+  margin-top: 2rem;
+}
+
+#loginForm label {
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 0.3rem;
+}
+
+#loginForm input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease;
+}
+
+#loginForm input:focus {
+  border-color: rgba(28, 167, 58, 0.9);
+  box-shadow: 0 0 5px rgba(28, 167, 58, 0.5);
+}
+
+#loginForm button {
+  background-color: rgba(28, 167, 58, 0.8);
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#loginForm button:hover {
+  background-color: rgba(28, 167, 58, 1);
+  transform: scale(1.05);
+}
+
+#sign-up {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+#sign-up a {
+  color: rgba(28, 167, 58, 0.9);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#sign-up a:hover {
+  text-decoration: underline;
+}
+
+#registerForm {
+  background-color: white;
+  border: 2px solid rgba(28, 167, 58, 0.7);
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  width: 90%;
+  max-width: 450px;
+  margin: 3rem auto;
+  padding: 2rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+}
+
+#registerForm h1 {
+  text-align: center;
+  font-size: 1.8rem;
+  color: rgba(28, 167, 58, 0.9);
+  margin-top: 2rem;
+}
+
+#registerForm label {
+  font-weight: bold;
+  color: #000;
+  margin-bottom: 0.3rem;
+}
+
+#registerForm input {
+  padding: 0.7rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+#registerForm input:focus {
+  border-color: rgba(28, 167, 58, 0.9);
+  box-shadow: 0 0 5px rgba(28, 167, 58, 0.5);
+}
+
+#registerForm button {
+  background-color: rgba(28, 167, 58, 0.8);
+  color: black;
+  font-weight: bold;
+  border: none;
+  border-radius: 8px;
+  padding: 0.8rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+#registerForm button:hover {
+  background-color: rgba(28, 167, 58, 1);
+  transform: scale(1.05);
+}
+
+.password-requirements {
+  font-size: 0.85rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+#sign-up {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: 0.95rem;
+}
+
+#sign-up a {
+  color: rgba(28, 167, 58, 0.9);
+  font-weight: bold;
+  text-decoration: none;
+}
+
+#sign-up a:hover {
+  text-decoration: underline;
+}
+
+
 footer{
   color: black;
   text-align: left;
@@ -262,7 +415,6 @@ footer{
  * Desktop Styles (Large Screens)
  *************************/
 @media screen and (min-width: 768px) {
-    /* Tablets: 2 cards por linha */
     #inv-display {
         grid-template-columns: repeat(2, 1fr);
     }
@@ -279,8 +431,8 @@ footer{
 
   body {
     background-color: white; 
-    max-width: 1200px; /* largura máxima do site */
-    margin: 40px auto; /* centraliza site */
+    max-width: 1200px; 
+    margin: 40px auto; 
     padding: 20px; 
     border: 5px solid rgba(28, 167, 58, 0.7); 
     box-sizing: border-box; 
@@ -341,9 +493,25 @@ footer{
       font-size: 1.6rem;
   }
 
-  /* Desktop: 3 cards por linha */
   #inv-display {
       grid-template-columns: repeat(3, 1fr);
       justify-content: center;
+  }
+
+  #loginForm {
+    margin-top: 5rem;
+    padding: 2.5rem;
+  }
+  #loginForm h1 {
+    font-size: 2rem;
+  }
+
+  #registerForm {
+    margin-top: 5rem;
+    padding: 2.5rem;
+  }
+
+  #registerForm h1 {
+    font-size: 2rem;
   }
 }
