@@ -1,0 +1,19 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%# messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+ <% errors.array().forEach(error => { %>
+   <li><%= error.msg %></li>
+<%  }) %>
+ </ul>
+<% } %>
+
+<a class="newClass" href="/inventory/addClassification">Add a New Classification</a>
+<a class="newVehicle" href="/inventory/addVehicle">Add a New vehicle</a>
+

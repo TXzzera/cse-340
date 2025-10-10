@@ -1,0 +1,87 @@
+<% if (title) { %>
+<h1><%= title %></h1>
+<% } else { 
+  res.redirect('/') 
+} %>
+
+<%# messages() %>
+
+<% if (errors) { %>
+  <ul class="notice">
+    <% errors.array().forEach(error => { %>
+      <li><%= error.msg %></li>
+    <% }) %>
+  </ul>
+<% } %>
+
+<form id="newVehicle" action="/inventory/addVehicle" method="post">
+  <label for="classificationId">Classification</label>
+  <div class="classification-requirements">
+    <span>Select a classification for the vehicle</span>
+  </div>
+  <select id="classificationId" name="classification_id" required>
+    <option value="" disabled selected>Select a classification</option>
+    <% classifications.forEach(classification => { %>
+      <option value="<%= classification.classification_id %>" 
+        <%= (locals.classification_id == classification.classification_id) ? 'selected' : '' %>>
+        <%= classification.classification_name %>
+      </option>
+    <% }) %>
+  </select>
+
+  <label for="inv_make">Make</label>
+  <div class="make-requirements">
+    <span>Make must be alphabetic characters only</span>
+  </div>
+  <input type="text" id="inv_make" name="inv_make" required value="<%= locals.inv_make %>">
+
+  <label for="inv_model">Model</label>
+  <div class="model-requirements">
+    <span>Model must be alphanumeric characters only</span>
+  </div>
+  <input type="text" id="inv_model" name="inv_model" required value="<%= locals.inv_model %>">
+
+  <label for="inv_year">Year</label>
+  <div class="year-requirements">
+    <span>Year must be a four-digit number between 1900 and the current year</span>
+  </div>
+  <input type="number" id="inv_year" name="inv_year" required value="<%= locals.inv_year %>">
+
+  <label for="inv_description">Description</label>
+  <div class="description-requirements">
+    <span>Description cannot be empty</span>
+  </div>
+  <textarea id="inv_description" name="inv_description" required><%= locals.inv_description %></textarea>
+
+  <label for="inv_image">Image URL</label>
+  <div class="image-requirements">
+    <span>Image URL must be a valid URL ending with .jpg, .jpeg, .png, or .gif</span>
+  </div>
+  <input type="url" id="inv_image" name="inv_image" required value="<%= locals.inv_image %>">
+
+  <label for="inv_thumbnail">Thumbnail URL</label>
+  <div class="thumbnail-requirements">
+    <span>Thumbnail URL must be a valid URL ending with .jpg, .jpeg, .png, or .gif</span>
+  </div>
+  <input type="url" id="inv_thumbnail" name="inv_thumbnail" required value="<%= locals.inv_thumbnail %>">
+
+  <label for="inv_price">Price</label>
+  <div class="price-requirements">
+    <span>Price must be a positive number with up to two decimal places</span>
+  </div>
+  <input type="number" step="0.01" id="inv_price" name="inv_price" required value="<%= locals.inv_price %>">
+
+  <label for="inv_miles">Mileage</label>
+  <div class="mileage-requirements">
+    <span>Mileage must be a positive integer</span>
+  </div>
+  <input type="number" id="inv_miles" name="inv_miles" required value="<%= locals.inv_miles %>">
+
+  <label for="inv_color">Color</label>
+  <div class="color-requirements">
+    <span>Color must be alphabetic characters only</span>
+  </div>
+  <input type="text" id="inv_color" name="inv_color" required value="<%= locals.inv_color %>">
+
+  <button type="submit">Add Vehicle</button>
+</form>
