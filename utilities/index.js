@@ -87,5 +87,14 @@ Util.wrapVehicleHTML = function(vehicle) {
   }
 }
 
+Util.getClassificationOptions = async function () {
+  try {
+    let data = await invModel.getClassifications();
+    return data.rows; // apenas array de objetos
+  } catch (error) {
+    console.error("Error fetching classification options:", error);
+    return [];
+  }
+}
 
 module.exports = Util

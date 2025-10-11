@@ -27,4 +27,7 @@ router.post(
   invController.addNewVehicle
 )
 
+router.post("/deleteVehicle", utilities.handleErrors(invController.deleteVehicle));
+router.post("/deleteClassification", utilities.handleErrors(invController.deleteClassification));
+
 module.exports = router;

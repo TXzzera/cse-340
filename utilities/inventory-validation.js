@@ -87,12 +87,13 @@ validate.checkClassificationData = async (req, res, next) => {
   const errors = validationResult(req)
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
-    res.render("inv/addClassification", {
+    res.render("inventory/addClassification", {
       errors,
       title: "Add New Classification",
       nav,
-      classification_name,
-    })
+      locals: {
+        classification_name,
+      }})
     return
   }
   next()
@@ -119,12 +120,13 @@ validate.checkVehicleData = async (req, res, next) => {
   if (!errors.isEmpty()) {
     let nav = await utilities.getNav()
     const classifications = await utilities.getClassificationOptions()
-    res.render("inv/addVehicle", {
+    res.render("inventory/addVehicle", {
       errors,
       title: "Add New Vehicle",
       nav,
       classifications,
-      inv_make,
+      locals: {
+        inv_make,
       inv_model,
       inv_year,
       inv_price,
@@ -134,7 +136,7 @@ validate.checkVehicleData = async (req, res, next) => {
       inv_thumbnail,
       inv_color,
       classification_id,
-    })
+      }})
     return
   }
   next()

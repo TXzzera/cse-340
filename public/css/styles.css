@@ -403,6 +403,163 @@ nav ul li a{
   text-decoration: underline;
 }
 
+/* ******** Management Page & Delete List Compact ******** */
+.management-actions {
+display: flex;
+gap: 0.2rem; 
+margin-bottom: 0.8rem;
+}
+
+.management-actions a {
+padding: 0.2rem 0.4rem; 
+background-color: rgba(28,167,58,0.7);
+color: black; 
+text-decoration: none;
+border-radius: 4px;
+font-weight: bold;
+font-size: 0.8rem; 
+transition: transform 0.2s ease;
+}
+
+.management-actions a:hover {
+transform: scale(1.1);
+}
+
+/* Delete List */
+.delete-list {
+list-style: disc; 
+padding-left: 1rem; 
+margin: 0;
+display: flex;
+flex-wrap: wrap;
+gap: 1rem; 
+flex-direction: column;
+}
+
+.delete-list li {
+display: flex;
+justify-content: space-between; 
+align-items: center;
+border: 2px solid rgba(28, 167, 58, 0.7); 
+border-radius: 8px; 
+padding: 0.5rem 0.5rem; 
+background-color: white; 
+margin-bottom: 0.2rem; 
+font-size: 1rem;
+line-height: 1.2;
+width: 100%;
+max-width: 250px;
+height: 100px;
+}
+
+.delete-list li button {
+background-color: rgba(28, 167, 58, 0.7); 
+border:  none; 
+color: black; 
+padding: 0.2rem 0.5rem; 
+border-radius: 4px; 
+margin-left: 0.5rem; 
+font-size: 0.9rem;
+font-weight: bold;
+cursor: pointer;
+transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.delete-list li button:hover {
+transform: scale(1.05); 
+background-color: rgba(28, 167, 58, 1); 
+}
+
+/* Form Styling */
+form {
+    background-color: #fff;
+    border: none;
+    border-radius: 10px;
+    padding: 2rem;
+    max-width: 500px;
+    margin: 2rem auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+form h1 {
+    text-align: center;
+    color: rgba(28,167,58,0.9);
+    margin-bottom: 1rem;
+}
+
+form label {
+    font-weight: bold;
+    color: #000;
+}
+
+form input,
+form select,
+form textarea {
+    padding: 0.7rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+    outline: none;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+form input:focus,
+form select:focus,
+form textarea:focus {
+    border-color: rgba(28,167,58,0.9);
+    box-shadow: 0 0 5px rgba(28,167,58,0.5);
+}
+
+form button {
+    background-color: rgba(28,167,58,0.8);
+    color: black;
+    font-weight: bold;
+    border: none;
+    border-radius: 8px;
+    padding: 0.8rem;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background-color: rgba(28,167,58,1);
+    transform: scale(1.05);
+}
+
+/* Error Messages */
+ul.notice {
+    background-color: rgba(255,0,0,0.1);
+    border: 1px solid rgba(255,0,0,0.4);
+    color: red;
+    padding: 0.8rem 1rem;
+    border-radius: 8px;
+    list-style: none;
+    margin-bottom: 1rem;
+}
+
+ul.notice li {
+    margin-bottom: 0.5rem;
+}
+
+/* Requirements messages under inputs */
+.classification-requirements span,
+.make-requirements span,
+.model-requirements span,
+.year-requirements span,
+.description-requirements span,
+.image-requirements span,
+.thumbnail-requirements span,
+.price-requirements span,
+.mileage-requirements span,
+.color-requirements span {
+    font-size: 0.85rem;
+    color: #333;
+    margin-top: 0.3rem;
+    display: block;
+}
+
 
 footer{
   color: black;
@@ -417,6 +574,19 @@ footer{
 @media screen and (min-width: 768px) {
     #inv-display {
         grid-template-columns: repeat(2, 1fr);
+    }
+     .management-actions {
+        justify-content: flex-start;
+    }
+
+    .delete-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 0.5rem;
+    }
+    
+    form {
+        max-width: 600px;
     }
 }
 
@@ -514,4 +684,13 @@ footer{
   #registerForm h1 {
     font-size: 2rem;
   }
+
+  .delete-list {
+        grid-template-columns: repeat(3, 1fr);
+        gap: 0.5rem;
+    }
+
+  form {
+        padding: 2.5rem;
+    }
 }

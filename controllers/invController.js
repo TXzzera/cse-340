@@ -34,13 +34,23 @@ invCont.vehicleDetails = async function (req, res) {
 }
 
 invCont.buildManagementView = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  res.render("inventory/management", {
-    title: "Vehicle Management",
-    nav,
-    res,
-  })
+  try {
+    let nav = await utilities.getNav()
+    let classifications = await invModel.getClassifications() 
+    let vehicles = await invModel.getAllVehicles() 
+
+    res.render("inventory/management", {
+      title: "Vehicle Management",
+      nav,
+      errors: null,
+      classifications: classifications.rows, 
+      vehicles: vehicles.rows,               
+    })
+  } catch (error) {
+    next(error)
+  }
 }
+
 
 invCont.buildAddClassificationView = async function (req, res, next) {
   let nav = await utilities.getNav()
@@ -52,15 +62,35 @@ invCont.buildAddClassificationView = async function (req, res, next) {
 }
 
 invCont.buildAddVehicleView = async function (req, res, next) {
-  let nav = await utilities.getNav()
-  let classifications = await utilities.getClassificationOptions()  
-  res.render("inventory/addVehicle", {
-    title: "Add New Vehicle",
-    nav,
-    errors: null,
-    classifications,
-  })
-}
+  try {
+    const nav = await utilities.getNav();
+    let classifications = await utilities.getClassificationOptions();
+
+    if (!Array.isArray(classifications)) {
+      classifications = [];
+    }
+
+    res.render("inventory/addVehicle", {
+      title: "Add New Vehicle",
+      nav,
+      errors: null,
+      classifications,
+      classification_id: null,
+      inv_make: "",
+      inv_model: "",
+      inv_year: "",
+      inv_description: "",
+      inv_image: "",
+      inv_thumbnail: "",
+      inv_price: "",
+      inv_miles: "",
+      inv_color: ""
+    });
+  } catch (error) {
+    console.error("Error in buildAddVehicleView:", error);
+    next(error); 
+  }
+};
 
 invCont.addNewClassification = async function (req, res) {
   try {
@@ -70,13 +100,7 @@ invCont.addNewClassification = async function (req, res) {
     
     if (newClassAdded) {
       req.flash("notice", `New classification added successfully.`)
-      const classifications = await utilities.getClassificationOptions()
-      res.status(201).render("inventory/management", {
-        title: "Vehicle Management",
-        nav,
-        errors: null,
-        classifications,
-      })
+      res.redirect("/inv");
     } else {
       req.flash("notice", "Sorry, adding the new classification failed.")
       res.status(501).render("inventory/addClassification", {
@@ -101,13 +125,7 @@ invCont.addNewVehicle = async function (req, res) {
 
   if (newVehicleAdded) {
     req.flash("notice", `New vehicle added successfully.`)
-    const classifications = await utilities.getClassificationOptions()
-    res.status(201).render("inventory/management", {
-      title: "Vehicle Management",
-      nav,
-      errors: null,
-      classifications,
-    })
+    res.redirect("/inv");
   } else {
     req.flash("notice", "Sorry, adding the new vehicle failed.")
     const classifications = await utilities.getClassificationOptions()
@@ -119,5 +137,29 @@ invCont.addNewVehicle = async function (req, res) {
     })
   }
 }
+
+invCont.deleteVehicle = async (req, res) => {
+  const inv_id = req.body.inv_id;
+  try {
+    await invModel.deleteVehicle(inv_id);
+    req.flash("notice", "Vehicle deleted successfully.");
+    res.redirect("/inv");
+  } catch (error) {
+    console.error("Error deleting vehicle:", error);
+    res.status(500).send("Error deleting vehicle");
+  }
+};
+
+invCont.deleteClassification = async (req, res) => {
+  const classification_id = req.body.classification_id;
+  try {
+    await invModel.deleteClassification(classification_id);
+    req.flash("notice", "Classification deleted successfully.");
+    res.redirect("/inv");
+  } catch (error) {
+    console.error("Error deleting classification:", error);
+    res.status(500).send("Error deleting classification");
+  }
+};
 
 module.exports = invCont
