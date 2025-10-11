@@ -12,7 +12,6 @@ router.get("/", utilities.handleErrors(invController.buildManagementView));
 router.get("/addClassification", invController.buildAddClassificationView);
 router.get("/addVehicle", invController.buildAddVehicleView);
 
-
 //Post Routes
 router.post(
   "/addClassification",

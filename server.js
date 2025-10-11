@@ -54,9 +54,11 @@ app.use(static)
 
 // Index Route
 app.get("/", baseController.buildHome)
-app.use("/inventory", inventoryRoute)
+app.use("/inv", inventoryRoute)
 app.use("/error", errorRoute)
 app.use("/account",accountRoute)
+
+
 
 /* Middleware of Global Error Handler */
 app.use(errorHandler); 
