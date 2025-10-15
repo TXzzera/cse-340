@@ -1,9 +1,36 @@
 <% if (title) { %>
-  <h1><%= title %></h1>
-<% } else { %>
-  <h1>Account</h1>
+  <h1><%- title %></h1>
+  <%- messages() %>
+<% } else {
+  res.redirect('/')
+} %>
+
+<%
+// Capture the first name and ID (assuming they were passed as "accountData")
+const firstName = accountData.account_firstname;
+const accountId = accountData.account_id;
+const accountType = accountData.account_type;
+%>
+
+<h2>Welcome, <%= firstName %>!</h2>
+
+<p>
+<a href="/account/update/<%= accountId %>" title="Click to update account information">Update Account Information</a>
+</p>
+
+<% if (accountType === "Employee" || accountType === "Admin") { %>
+
+<h3>Inventory Management</h3>
+<p>
+ <a href="/inv/" title="Click to manage inventory">Access Inventory Management View</a>
+</p>
+
 <% } %>
 
-<%# messages() %>
-
-<p>You're Logged In!</p>
+<hr>
+<p>Your account information:</p>
+<ul>
+<li>Name: <%= accountData.account_firstname %> <%= accountData.account_lastname %></li>
+<li>Email: <%= accountData.account_email %></li>
+<li>Account Type: <%= accountData.account_type %></li>
+</ul>

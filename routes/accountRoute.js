@@ -9,6 +9,8 @@ router.get("/login", utilities.handleErrors(accountController.buildLogin))
 router.get("/register", utilities.handleErrors(accountController.buildRegister))
 router.get("/userAccount", utilities.handleErrors(accountController.buildAccountManagement))
 router.get("/", utilities.checkLogin, utilities.handleErrors(accountController.buildAccountManagement))
+router.get("/logout", utilities.handleErrors(accountController.accountLogout))
+router.get("/update/:accountId", utilities.checkJWTToken, utilities.handleErrors(accountController.buildUpdateView));
 router.post(
   "/register",
   regValidate.registationRules(),
@@ -21,5 +23,19 @@ router.post(
    regValidate.checkLoginData,
    utilities.handleErrors(accountController.accountLogin)
 )
+router.post(
+  "/update",
+  utilities.checkJWTToken,       
+  regValidate.updateAccountRules(),
+  regValidate.checkUpdateData,
+  utilities.handleErrors(accountController.updateAccount)
+);
+
+router.post(
+  "/change-password",
+  regValidate.newPasswordRules(),
+  regValidate.checkNewPasswordData,
+  utilities.handleErrors(accountController.changePassword)
+);
 
 module.exports = router;

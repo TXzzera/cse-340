@@ -110,6 +110,19 @@ Util.classificationOptions = async function (classification_id = null) {
   }
 };
 
+/* ****************************************
+* Function to build the JWT for the user
+**************************************** */
+Util.createJWT = function (accountData) {
+  try {
+    const token = jwt.sign(accountData, process.env.ACCESS_TOKEN_SECRET, { expiresIn: 3600 * 1000 });
+    return token;
+  } catch (error) {
+    console.error("JWT creation error:", error);
+    return null;
+  }
+};
+
 
 /* ****************************************
 * Middleware to check token validity
@@ -120,18 +133,21 @@ Util.checkJWTToken = (req, res, next) => {
    req.cookies.jwt,
    process.env.ACCESS_TOKEN_SECRET,
    function (err, accountData) {
-    if (err) {
-     req.flash("Please log in")
-     res.clearCookie("jwt")
-     return res.redirect("/account/login")
-    }
-    res.locals.accountData = accountData
-    res.locals.loggedin = 1
+        if (err) {
+          res.locals.accountData = null
+          res.locals.loggedin = 0
+          return next()
+        }
+        res.locals.accountData = accountData
+        res.locals.loggedin = 1
+        next()
+      }
+    )
+  } else {
+    res.locals.accountData = null
+    res.locals.loggedin = 0
     next()
-   })
- } else {
-  next()
- }
+  }
 }
 
 /* ****************************************
@@ -145,5 +161,19 @@ Util.checkJWTToken = (req, res, next) => {
     return res.redirect("/account/login")
   }
  }
+
+Util.checkAuthorization = (req, res, next) => {
+    if (!res.locals.accountData || !res.locals.accountData.account_type) {
+        req.flash("notice", "Access Denied. Please log in.")
+        return res.redirect("/account/login")
+    }
+    const accountType = res.locals.accountData.account_type
+    if (accountType === "Employee" || accountType === "Admin") {
+        next()
+    } else {
+        req.flash("notice", "Access Denied. You do not have sufficient permissions to view this page.")
+        return res.redirect("/account/login")
+    }
+}
 
 module.exports = Util

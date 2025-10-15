@@ -42,10 +42,26 @@ app.use(utilities.checkJWTToken)
 
 // Express Messages Middleware
 app.use(require('connect-flash')())
-app.use(function(req, res, next){
-  res.locals.messages = require('express-messages')(req, res)
-  next()
-})
+app.use(function(req, res, next) {
+    res.locals.messages = function() {
+        let output = '';
+        let success = req.flash('success');
+        if (success.length) {
+            output += `<div class="notice success">${success[0]}</div>`;
+        }
+        let error = req.flash('error');
+        if (error.length) {
+            output += `<div class="notice error">${error[0]}</div>`;
+        }
+        let notice = req.flash('notice');
+        if (notice.length) {
+            output += `<div class="notice">${notice[0]}</div>`;
+        }
+        
+        return output;
+    };
+    next();
+});
 
 /* ***********************
  * View Engine and Templates

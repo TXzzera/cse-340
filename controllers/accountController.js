@@ -62,7 +62,7 @@ async function registerAccount(req, res) {
       errors: null,
     })
   } else {
-    req.flash("notice", "Sorry, the registration failed.")
+    req.flash("notice", "Sorry, the registration errored.")
     res.status(501).render("account/register", {
       title: "Registration",
       nav,
@@ -115,12 +115,96 @@ async function accountLogin(req, res) {
 
 async function buildAccountManagement(req, res, next) {
   let nav = await utilities.getNav()
+  const accountData = res.locals.accountData
   res.render("account/userAccount", {
     title: "Account Management",
     nav,
     errors: null,
+    accountData:accountData
   })
 }
 
+async function accountLogout(req, res) {
+  res.clearCookie("jwt")  
+  res.locals.loggedin = 0
+  res.locals.accountData = null    
+  req.flash("logoutMsg", "You have been logged out.") 
+  res.redirect("/")         
+}
 
-module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement }
+async function buildUpdateView(req, res, next) {
+    const account_id = parseInt(req.params.accountId) || res.locals.accountData.account_id;
+    let nav = await utilities.getNav();
+    const accountData = await accountModel.getAccountById(account_id);
+
+    if (!accountData) {
+        req.flash("notice", "Account not found.");
+        return res.redirect("/account/");
+    }
+
+    res.render("account/updateAccount", {
+        title: "Update Account",
+        nav,
+        accountData: accountData,
+        errors: null,
+    });
+}
+
+/* ****************************************
+ * Process Account Update Request (Name/Email)
+ * ************************************ */
+async function updateAccount(req, res) {
+    let nav = await utilities.getNav();
+    const { account_firstname, account_lastname, account_email, account_id } = req.body;
+
+    const updatedUser = await accountModel.updateAccount(
+        account_firstname,
+        account_lastname,
+        account_email,
+        account_id
+    );
+
+    if (updatedUser) {
+        delete updatedUser.account_password; 
+        const accessToken = utilities.createJWT(updatedUser);
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+        req.flash("success", "Account information updated successfully.");
+        return res.redirect("/account/"); 
+    } else {
+        req.flash("notice", "Sorry, the account update failed.");
+        res.status(501).render("account/updateAccount", {
+             title: "Update Account",
+             nav,
+             accountData: req.body,
+             errors: null,
+        });
+    }
+}
+
+async function changePassword(req, res) {
+    let nav = await utilities.getNav();
+    const { account_password, account_id } = req.body;
+
+    let hashedPassword;
+    try {
+        hashedPassword = await bcrypt.hash(account_password, 10);
+    } catch (error) {
+        req.flash("notice", 'Sorry, there was an error processing the password change.');
+        return res.status(500).redirect("/account/update/" + account_id);
+    }
+
+    const updateResult = await accountModel.changePassword(hashedPassword, account_id);
+
+    if (updateResult > 0) {
+        const updatedUser = await accountModel.getAccountById(account_id);
+        delete updatedUser.account_password;
+        const accessToken = utilities.createJWT(updatedUser);
+        res.cookie("jwt", accessToken, { httpOnly: true, maxAge: 3600 * 1000 });
+        req.flash("success", "Password updated successfully.");
+        return res.redirect("/account/");
+    } else {
+        req.flash("notice", "Sorry, the password change failed.");
+        return res.status(501).redirect("/account/");
+    }}
+
+module.exports = { buildLogin, buildRegister, registerAccount, accountLogin, buildAccountManagement, accountLogout, buildUpdateView, updateAccount, changePassword }
