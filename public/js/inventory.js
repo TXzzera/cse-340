@@ -49,6 +49,5 @@ function buildInventoryList(data) {
 
     dataTable += '</tbody>';
 
-    // Inject the table into the DOM
     inventoryDisplay.innerHTML = dataTable;
 }

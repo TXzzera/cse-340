@@ -1,4 +1,5 @@
-<% if (title) { %>
+<div class="user-account">
+  <% if (title) { %>
   <h1><%- title %></h1>
   <%- messages() %>
 <% } else {
@@ -15,7 +16,7 @@ const accountType = accountData.account_type;
 <h2>Welcome, <%= firstName %>!</h2>
 
 <p>
-<a href="/account/update/<%= accountId %>" title="Click to update account information">Update Account Information</a>
+<a id="update-info" href="/account/update/<%= accountId %>" title="Click to update account information">Update Account Information</a>
 </p>
 
 <% if (accountType === "Employee" || accountType === "Admin") { %>
@@ -27,10 +28,15 @@ const accountType = accountData.account_type;
 
 <% } %>
 
-<hr>
-<p>Your account information:</p>
-<ul>
-<li>Name: <%= accountData.account_firstname %> <%= accountData.account_lastname %></li>
-<li>Email: <%= accountData.account_email %></li>
-<li>Account Type: <%= accountData.account_type %></li>
-</ul>
+    <hr>
+
+<div class="account-box">
+  <p>Your account information:</p>
+  <ul>
+    <li><strong>Name:</strong> <%= accountData.account_firstname %> <%= accountData.account_lastname %></li>
+    <li><strong>Email:</strong> <%= accountData.account_email %></li>
+    <li><strong>Account Type:</strong> <%= accountData.account_type %></li>
+  </ul>
+</div>
+
+</div>
