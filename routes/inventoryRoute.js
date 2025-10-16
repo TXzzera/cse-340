@@ -14,6 +14,12 @@ router.get("/addVehicle", utilities.checkJWTToken, utilities.checkAuthorization,
 router.get("/getInventory/:classification_id", utilities.checkJWTToken, utilities.checkAuthorization, utilities.handleErrors(invController.getInventoryJSON));
 router.get("/edit/:inv_id", utilities.checkJWTToken, utilities.checkAuthorization, utilities.handleErrors(invController.editInventoryView));
 router.get("/delete/:inv_id", utilities.checkJWTToken, utilities.checkAuthorization, utilities.handleErrors(invController.buildDeleteConfirmationView));
+router.get(
+  "/deleteClassification",
+  utilities.checkJWTToken,
+  utilities.checkAuthorization,
+  utilities.handleErrors(invController.buildDeleteClassificationView) // função do controller que lista todas
+);
 
 //Post Routes
 router.post(
@@ -41,6 +47,15 @@ router.post("/edit-inventory",
  utilities.handleErrors(invController.updateVehicle));
 
 router.post("/deleteVehicle", utilities.checkJWTToken, utilities.checkAuthorization, utilities.handleErrors(invController.deleteVehicle));
-//router.post("/deleteClassification", utilities.handleErrors(invController.deleteClassification));
+router.delete(
+  "/delete/:id",
+  utilities.checkJWTToken,
+  utilities.checkAuthorization,
+  async (req, res, next) => {
+    await invController.deleteClassification(req, res, next);
+  }
+);
+
+
 
 module.exports = router;

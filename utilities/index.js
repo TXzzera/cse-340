@@ -168,7 +168,7 @@ Util.checkAuthorization = (req, res, next) => {
         return res.redirect("/account/login")
     }
     const accountType = res.locals.accountData.account_type
-    if (accountType === "Employee" || accountType === "Admin") {
+    if (accountType === "Employee" || accountType === "Admin" || accountType === "Client") {
         next()
     } else {
         req.flash("notice", "Access Denied. You do not have sufficient permissions to view this page.")

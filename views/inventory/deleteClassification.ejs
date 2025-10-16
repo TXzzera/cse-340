@@ -1,0 +1,59 @@
+<% if (title) { %>
+  <h1><%= title %></h1>
+<% } else { res.redirect('/') } %>
+
+<%- messages() %>
+
+<div id="deleteClassificationContainer">
+  <p>
+    <strong>Warning:</strong> Deleting a classification is permanent and will remove all associated vehicles (if any).  
+    Please select the classification you want to delete below.
+  </p>
+
+  <% if (errors) { %>
+    <ul class="errors">
+      <% errors.array().forEach(error => { %>
+        <li><%= error.msg %></li>
+      <% }) %>
+    </ul>
+  <% } %>
+
+  <% if (classifications && classifications.length > 0) { %>
+    <table class="classification-table">
+  <thead>
+    <tr>
+      <th>Classification Name</th>
+      <th>Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <% classifications.forEach(c => { %>
+      <tr>
+        <td><%= c.classification_name %></td>
+        <td>
+          <form onsubmit="return false;">
+              <button type="button" class="delete-btn" data-classification="<%= c.classification_id %>">Delete</button>
+          </form>
+        </td>
+      </tr>
+    <% }) %>
+  </tbody>
+</table>
+  <% } else { %>
+    <p>No classifications found.</p>
+  <% } %>
+</div>
+
+<div class="modal-overlay" id="deleteModal">
+  <div class="modal-content">
+    <h3>Confirm Deletion</h3>
+    <p>Are you sure you want to DELETE this classification? This action is permanent and may affect associated vehicles.</p>
+    <div class="modal-buttons">
+      <button id="cancelDelete">Cancel</button>
+      <button id="confirmDelete">Delete</button>
+    </div>
+  </div>
+</div>
+
+
+<script src="/js/deleteConfirmation.js"></script>

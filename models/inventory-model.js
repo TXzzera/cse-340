@@ -153,4 +153,6 @@ async function getAllVehicles() {
 
 
 
+
+
 module.exports = {getClassifications, getInventoryByClassificationId, getVehicleById, addNewClassification, addNewVehicle, checkExistingClassification, updateVehicle, deleteClassification, deleteVehicle, getAllVehicles};

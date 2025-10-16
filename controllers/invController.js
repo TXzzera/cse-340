@@ -48,6 +48,7 @@ invCont.buildManagementView = async function (req, res, next) {
     const nav = await utilities.getNav();
     const classifications = await utilities.classificationOptions(); 
     const vehicles = await invModel.getAllVehicles();
+    
 
     res.render("inventory/management", {
       title: "Vehicle Management",
@@ -292,6 +293,7 @@ invCont.buildDeleteConfirmationView = async function (req, res, next) {
         inv_miles: itemData.inv_miles,
         inv_color: itemData.inv_color,
         classification_id: itemData.classification_id,
+        classification_name: itemData.classification_name
     });
 };
 
@@ -324,6 +326,7 @@ invCont.deleteVehicle = async function (req, res, next) {
                 inv_year: itemData.inv_year,
                 inv_description: itemData.inv_description,
                 classification_id: itemData.classification_id,
+                classification_name: itemData.classification_name
             });
         }
     } catch (error) {
@@ -336,16 +339,40 @@ invCont.deleteVehicle = async function (req, res, next) {
 /* ***************************
  *  Delete classification
  * *************************** */
-invCont.deleteClassification = async (req, res) => {
-  const classification_id = req.body.classification_id;
+
+invCont.buildDeleteClassificationView = async (req, res, next) => {
   try {
-    await invModel.deleteClassification(classification_id);
-    req.flash("notice", "Classification deleted successfully.");
-    res.redirect("/inv");
+    const nav = await utilities.getNav();
+    const data = await invModel.getClassifications();
+    const classifications = data.rows;
+    res.render("inventory/deleteClassification", {
+      title: "Delete a Classification",
+      nav,
+      classifications,
+      errors: null
+    });
   } catch (error) {
-    console.error("Error deleting classification:", error);
-    res.status(500).send("Error deleting classification");
+    console.error("Error building delete classification view:", error);
+    next(error);
   }
 };
+
+invCont.deleteClassification = async function(req, res, next) {
+  try {
+    const classification_id = req.params.id;
+    const result = await invModel.deleteClassification(classification_id);
+
+    if (!result) {
+      return res.status(404).json({ message: "Classification not found" });
+    }
+
+    return res.status(200).json({ message: "Successfully deleted" });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: "Error deleting classification" });
+  }
+};
+
+
 
 module.exports = invCont;
